@@ -76,6 +76,97 @@ textarea{width:100%;min-height:90px;background:transparent;border:none;outline:n
 .debug-output{background:#0a0c14;border-radius:var(--rsm);padding:12px;font-size:13px;color:#cbd5e1;margin-top:12px;max-height:280px;overflow:auto;white-space:pre-wrap}
 .errmsg{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:var(--rsm);padding:.7rem 1rem;font-size:13px;color:#fca5a5;margin-bottom:.75rem;display:none}
 .key-input{background:var(--s2);border:1px solid var(--b2);border-radius:6px;padding:6px 12px;color:var(--tx);font-size:12px;width:300px}
+
+/* ============ v4 新增樣式 ============ */
+/* 可折疊區 */
+.collapse-header{display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;padding:8px 0}
+.collapse-header:hover{opacity:0.85}
+.collapse-arrow{transition:transform .3s ease;font-size:14px}
+.collapse-header.open .collapse-arrow{transform:rotate(90deg)}
+.collapse-body{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .25s ease}
+.collapse-body.open{max-height:500px;padding-top:12px}
+
+/* Toast */
+#toast-container{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{padding:12px 18px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.45);opacity:0;transform:translateX(20px);transition:all .3s ease;pointer-events:auto;border:1px solid;backdrop-filter:blur(8px)}
+.toast.show{opacity:1;transform:translateX(0)}
+.toast-success{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.5);color:#86efac}
+.toast-info{background:rgba(79,142,247,.15);border-color:rgba(79,142,247,.5);color:#93c5fd}
+.toast-warning{background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.5);color:#fcd34d}
+.toast-error{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.5);color:#fca5a5}
+
+/* IPO 完整度評分 */
+.score-card{display:flex;align-items:center;gap:14px;padding:12px 16px;background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(79,142,247,.05));border:1px solid rgba(124,58,237,.25);border-radius:10px;margin-top:12px}
+.score-circle{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0;border:3px solid}
+.score-good{border-color:var(--grn);color:var(--grn);background:rgba(16,185,129,.08)}
+.score-ok{border-color:var(--amb);color:var(--amb);background:rgba(245,158,11,.08)}
+.score-low{border-color:#ef4444;color:#fca5a5;background:rgba(239,68,68,.08)}
+.score-body{flex:1;font-size:12.5px;line-height:1.6}
+.score-title{font-weight:600;margin-bottom:4px;font-size:13px}
+.score-suggestions{color:var(--tx2);font-size:11.5px}
+
+/* AI 強化按鈕組 */
+.ai-toolkit{margin-top:14px;padding:14px;background:linear-gradient(135deg,rgba(124,58,237,.08),transparent);border:1px solid rgba(124,58,237,.25);border-radius:12px}
+.ai-toolkit-title{font-size:12.5px;font-weight:600;color:#c4b5fd;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.ai-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.ai-btn{padding:10px 12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:var(--tx);cursor:pointer;font-size:12px;text-align:left;transition:all .2s ease;line-height:1.4}
+.ai-btn:hover{background:rgba(124,58,237,.15);border-color:rgba(124,58,237,.45);transform:translateY(-1px)}
+.ai-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.ai-btn-emoji{font-size:18px;display:block;margin-bottom:3px}
+.ai-btn-label{font-weight:600;font-size:12.5px}
+.ai-btn-desc{font-size:10.5px;color:var(--tx2);margin-top:2px}
+
+/* AI 輸出區 */
+.ai-output{margin-top:12px;background:#0a0c14;border:1px solid rgba(124,58,237,.25);border-radius:10px;padding:14px;font-size:13px;color:#cbd5e1;line-height:1.7;max-height:420px;overflow-y:auto;display:none}
+.ai-output.show{display:block;animation:fadeIn .3s ease}
+.ai-output h4{color:#c4b5fd;font-size:13.5px;margin-bottom:6px;font-weight:600}
+.ai-output code{background:rgba(124,58,237,.15);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#ddd6fe}
+.ai-output pre{background:#0d1117;padding:12px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#94a3b8;overflow-x:auto;margin:8px 0;border:1px solid rgba(255,255,255,.06)}
+
+/* 測驗區 */
+.quiz-card{background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.25);border-radius:10px;padding:14px;margin-bottom:10px}
+.quiz-q{font-weight:600;font-size:13.5px;margin-bottom:10px;color:#fcd34d}
+.quiz-opt{display:block;padding:9px 12px;margin:5px 0;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:6px;cursor:pointer;font-size:12.5px;transition:all .15s ease}
+.quiz-opt:hover{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.4)}
+.quiz-opt.correct{background:rgba(16,185,129,.18);border-color:var(--grn);color:#86efac}
+.quiz-opt.wrong{background:rgba(239,68,68,.18);border-color:#ef4444;color:#fca5a5}
+.quiz-explain{margin-top:8px;padding:8px 12px;background:rgba(0,0,0,.3);border-left:3px solid var(--acc);border-radius:0 6px 6px 0;font-size:12px;color:var(--tx2);display:none}
+.quiz-explain.show{display:block}
+
+/* 領域卡片 */
+.domain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:12px}
+.dom-card{padding:10px 12px;border-radius:10px;border:1.5px solid var(--b2);background:var(--s1);cursor:pointer;transition:all .2s ease;text-align:left}
+.dom-card:hover{border-color:rgba(255,255,255,.2);transform:translateY(-1px)}
+.dom-card.active{border-color:var(--acc);background:rgba(79,142,247,.08);box-shadow:0 0 0 1px var(--acc)}
+.dom-card-icon{font-size:20px;display:block;margin-bottom:3px}
+.dom-card-name{font-weight:600;font-size:12.5px}
+.dom-card-desc{font-size:10.5px;color:var(--tx2);margin-top:2px}
+
+/* 程式碼工具列 */
+.code-tools{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.tool-btn{padding:5px 10px;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);border-radius:6px;color:#c4b5fd;cursor:pointer;font-size:11.5px;transition:all .15s ease;display:inline-flex;align-items:center;gap:4px}
+.tool-btn:hover{background:rgba(124,58,237,.25);border-color:rgba(124,58,237,.5)}
+.tool-btn-primary{background:linear-gradient(135deg,#10b981,#059669);border:none;color:white}
+.tool-btn-primary:hover{box-shadow:0 4px 12px rgba(16,185,129,.4)}
+
+/* 錯誤修復獨立區 */
+.fix-error-box{margin-top:12px;padding:12px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.25);border-radius:10px}
+.fix-error-title{font-size:12.5px;font-weight:600;color:#fca5a5;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.fix-error-input{width:100%;background:#0a0c14;border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:10px;color:#e2e8f0;font-family:'JetBrains Mono',monospace;font-size:11.5px;resize:vertical;min-height:60px;outline:none}
+.fix-error-input:focus{border-color:rgba(239,68,68,.5)}
+
+/* 工具提示 */
+.hint{display:inline-block;width:14px;height:14px;line-height:13px;text-align:center;background:rgba(255,255,255,.1);color:var(--tx2);border-radius:50%;font-size:9.5px;margin-left:6px;cursor:help;position:relative}
+.hint:hover{background:rgba(124,58,237,.4);color:#fff}
+.hint:hover::after{content:attr(data-hint);position:absolute;bottom:130%;left:50%;transform:translateX(-50%);background:#0a0c14;color:var(--tx);padding:8px 12px;border-radius:6px;font-size:11.5px;white-space:nowrap;max-width:280px;white-space:normal;width:max-content;max-width:280px;border:1px solid var(--b2);box-shadow:var(--shadow-md);z-index:100;pointer-events:none;line-height:1.5;font-weight:400}
+
+/* 響應式微調 */
+@media(max-width:640px){
+  .ai-grid{grid-template-columns:1fr 1fr}
+  .domain-grid{grid-template-columns:1fr 1fr}
+  .shell{padding:1rem .75rem 0}
+  .hdr{padding:1.5rem 0 1.5rem}
+}
 </style>
 </head>
 <body>
@@ -86,17 +177,27 @@ textarea{width:100%;min-height:90px;background:transparent;border:none;outline:n
   <p style="font-size:13px;color:var(--tx2)">輸入API Key → 一鍵生成IPO架構與完整Python代碼（基礎/類別/Colab互動版）</p>
 </div>
 
-<!-- API Key 設定區 -->
-<div class="card" style="border-color:rgba(79,142,247,.4)">
-  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
-    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-      <input type="password" id="geminiApiKey" class="key-input" placeholder="貼上 Gemini API Key (AIza...)" autocomplete="off">
-      <button class="qbtn" id="toggleApiModeBtn" onclick="toggleApiMode()">🔁 目前: 模擬模式</button>
-      <span style="font-size:11px;color:#a0aec0">💡 填寫有效Key自動啟用真實Gemini，留空則使用模擬引擎</span>
+<!-- API Key 設定區（可折疊，預設收起）-->
+<div class="card" style="border-color:rgba(124,58,237,.3)">
+  <div class="collapse-header" onclick="toggleCollapse(this)">
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500">
+      <span style="font-size:16px">⚙️</span>
+      <span>進階：升級到真實 Gemini API</span>
+      <span id="apiModeIndicator" style="font-size:10.5px;padding:2px 8px;border-radius:10px;background:rgba(245,158,11,.15);color:#fcd34d;border:1px solid rgba(245,158,11,.3)">模擬模式運作中</span>
     </div>
-    <div style="font-size:12px"><a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--acc)">免費取得API Key →</a> (每日1500次)</div>
+    <span class="collapse-arrow">▶</span>
   </div>
-  <div id="apiStatusMsg" style="font-size:12px;margin-top:8px;color:var(--grn)"></div>
+  <div class="collapse-body">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <input type="password" id="geminiApiKey" class="key-input" placeholder="貼上 Gemini API Key (AIza...)" autocomplete="off">
+        <button class="qbtn" id="toggleApiModeBtn" onclick="toggleApiMode()">🔁 切換模式</button>
+      </div>
+      <div style="font-size:11.5px"><a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--acc)">免費取得 API Key →</a> (每日 1500 次)</div>
+    </div>
+    <div id="apiStatusMsg" style="font-size:11.5px;margin-top:8px;color:var(--grn)"></div>
+    <div style="font-size:11px;color:var(--tx2);margin-top:6px;line-height:1.6">💡 不填 Key 也能用！模擬模式內建完整 IPO 引擎、5 大 AI 強化功能皆可運作。填入 Key 後 AI 回答會更貼近你的領域。</div>
+  </div>
 </div>
 
 <!-- 步驟導航 -->
@@ -110,27 +211,48 @@ textarea{width:100%;min-height:90px;background:transparent;border:none;outline:n
 <!-- 步驟1：心智圖輸入 -->
 <div class="panel active" id="panel-1">
   <div class="card">
-    <div style="font-weight:600;margin-bottom:10px">心智圖四個分支</div>
-    <div class="dbar">
-      <button class="dbtn active" id="d-none" onclick="setDomain('')">自訂領域</button>
-      <button class="dbtn" id="d-env" onclick="setDomain('環境工程（河川水質監測）')">🌿 環工</button>
-      <button class="dbtn" id="d-plant" onclick="setDomain('植物醫學（病蟲害診斷）')">🌱 植醫</button>
-      <button class="dbtn" id="d-aqua" onclick="setDomain('水產養殖（智慧魚塭管理）')">🐟 養殖</button>
-      <button class="dbtn" id="d-city" onclick="setDomain('智慧城市（交通與空氣品質整合監測）')">🏙️ 智慧城市</button>
+    <div style="font-weight:600;margin-bottom:10px">📍 選擇領域 <span class="hint" data-hint="選擇後會自動套用對應的範例資料，幫助你快速理解。也可以選『自訂』填自己的內容。">?</span></div>
+    <div class="domain-grid">
+      <button class="dom-card active" id="d-none" onclick="setDomain('')">
+        <span class="dom-card-icon">✏️</span>
+        <div class="dom-card-name">自訂領域</div>
+        <div class="dom-card-desc">空白起步</div>
+      </button>
+      <button class="dom-card" id="d-env" onclick="setDomain('環境工程（河川水質監測）')">
+        <span class="dom-card-icon">🌿</span>
+        <div class="dom-card-name">環境工程</div>
+        <div class="dom-card-desc">河川水質監測</div>
+      </button>
+      <button class="dom-card" id="d-plant" onclick="setDomain('植物醫學（病蟲害診斷）')">
+        <span class="dom-card-icon">🌱</span>
+        <div class="dom-card-name">植物醫學</div>
+        <div class="dom-card-desc">病蟲害診斷</div>
+      </button>
+      <button class="dom-card" id="d-aqua" onclick="setDomain('水產養殖（智慧魚塭管理）')">
+        <span class="dom-card-icon">🐟</span>
+        <div class="dom-card-name">水產養殖</div>
+        <div class="dom-card-desc">智慧魚塭管理</div>
+      </button>
+      <button class="dom-card" id="d-city" onclick="setDomain('智慧城市（交通與空氣品質整合監測）')">
+        <span class="dom-card-icon">🏙️</span>
+        <div class="dom-card-name">智慧城市</div>
+        <div class="dom-card-desc">交通 × 空品整合</div>
+      </button>
     </div>
     <div class="qrow">
-      <span>快速範例：</span>
-      <button class="qbtn" onclick="loadExample('env')">環工</button>
-      <button class="qbtn" onclick="loadExample('plant')">植醫</button>
-      <button class="qbtn" onclick="loadExample('aqua')">養殖</button>
+      <span style="font-size:12px;color:var(--tx2)">⚡ 快速填入範例：</span>
+      <button class="qbtn" onclick="loadExample('env')">🌿 環工</button>
+      <button class="qbtn" onclick="loadExample('plant')">🌱 植醫</button>
+      <button class="qbtn" onclick="loadExample('aqua')">🐟 養殖</button>
       <button class="qbtn" onclick="loadExample('city')">🏙️ 智慧城市</button>
-      <button class="qbtn" onclick="clearMindmap()">清除</button>
+      <button class="qbtn" onclick="clearMindmap()">🧹 清除</button>
     </div>
+    <div style="font-weight:600;margin:14px 0 10px;font-size:13px">🗺️ 心智圖四分支 <span class="hint" data-hint="把要做的專題拆成 4 個問題回答即可。對應 PDF 懶人包的 IPO 萬用流程第一步：畫心智圖想清楚要做什麼。">?</span></div>
     <div class="bgrid">
-      <div class="bc"><div class="bc-title">❓ 問題定義 <span class="tag tag-i">→ INPUT</span></div><textarea id="q1" placeholder="例如：人工監測效率低，24小時連續監測需求"></textarea></div>
-      <div class="bc"><div class="bc-title">⚙️ 技術導入 <span class="tag tag-p">→ PROCESS</span></div><textarea id="q2" placeholder="IoT感測器、AI異常偵測模型"></textarea></div>
-      <div class="bc"><div class="bc-title">🎯 應用情境 <span class="tag tag-po">P / O</span></div><textarea id="q3" placeholder="稽查人員接收推播(OUTPUT) / 現場確認(PROCESS)"></textarea></div>
-      <div class="bc"><div class="bc-title">📊 效益分析 <span class="tag tag-o">→ OUTPUT</span></div><textarea id="q4" placeholder="預警速度提升80% / 成本降低60%"></textarea></div>
+      <div class="bc"><div class="bc-title">❓ 問題定義 <span class="tag tag-i">→ INPUT</span> <span class="hint" data-hint="目前遇到什麼困難？例如：人工監測效率低、缺乏即時資料。">?</span></div><textarea id="q1" placeholder="例如：人工監測效率低，24小時連續監測需求"></textarea></div>
+      <div class="bc"><div class="bc-title">⚙️ 技術導入 <span class="tag tag-p">→ PROCESS</span> <span class="hint" data-hint="要用什麼技術解決？例如：IoT感測器、AI 模型、雲端運算。">?</span></div><textarea id="q2" placeholder="IoT感測器、AI異常偵測模型"></textarea></div>
+      <div class="bc"><div class="bc-title">🎯 應用情境 <span class="tag tag-po">P / O</span> <span class="hint" data-hint="誰會用這個系統、怎麼用？括號標註 (OUTPUT) 或 (PROCESS) 幫助 AI 分類。">?</span></div><textarea id="q3" placeholder="稽查人員接收推播(OUTPUT) / 現場確認(PROCESS)"></textarea></div>
+      <div class="bc"><div class="bc-title">📊 效益分析 <span class="tag tag-o">→ OUTPUT</span> <span class="hint" data-hint="完成後能得到什麼具體效益？盡量用數字。">?</span></div><textarea id="q4" placeholder="預警速度提升80% / 成本降低60%"></textarea></div>
     </div>
   </div>
   <div class="errmsg" id="err1"></div>
@@ -149,7 +271,14 @@ textarea{width:100%;min-height:90px;background:transparent;border:none;outline:n
       <div class="icol prc"><div class="icol-lbl">⚙️ PROCESS</div><div id="cp"></div></div>
       <div class="icol out"><div class="icol-lbl">📊 OUTPUT</div><div id="co"></div></div>
     </div>
-    <div class="infobox"><div class="infobox-lbl">AI 轉換說明</div><div id="ipoanalysis"></div></div>
+    <div id="ipoScoreCard" class="score-card" style="display:none">
+      <div id="scoreCircle" class="score-circle score-good">--</div>
+      <div class="score-body">
+        <div class="score-title" id="scoreTitle">IPO 完整度評分</div>
+        <div class="score-suggestions" id="scoreSuggestions"></div>
+      </div>
+    </div>
+    <div class="infobox" style="margin-top:12px"><div class="infobox-lbl">AI 轉換說明</div><div id="ipoanalysis"></div></div>
   </div>
   <div style="display:flex;gap:10px">
     <button class="btn" onclick="goStep(1)">← 返回修改</button>
@@ -158,31 +287,70 @@ textarea{width:100%;min-height:90px;background:transparent;border:none;outline:n
   </div>
 </div>
 
-<!-- 步驟3：Python 代碼與除錯助手 -->
+<!-- 步驟3：Python 代碼 + AI 五大強化 -->
 <div class="panel" id="panel-3">
   <div class="card">
-    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px;align-items:center">
       <span style="font-weight:600;">🐍 Python 完整版（Class + 函式 + matplotlib + ipywidgets）</span>
+      <div class="code-tools">
+        <button class="tool-btn" onclick="copyCurrentCode()">📋 複製</button>
+        <button class="tool-btn tool-btn-primary" onclick="downloadIpynb()">⬇️ 下載 .ipynb</button>
+      </div>
     </div>
     <div class="code-card">
-      <div class="code-hdr"><span class="code-fname" id="py-fname">code.py</span><button class="qbtn" onclick="copyCurrentCode()">📋 複製此版代碼</button></div>
+      <div class="code-hdr"><span class="code-fname" id="py-fname">code.py</span><span style="font-size:11px;color:var(--tx2)" id="py-meta"></span></div>
       <div class="code-body"><pre id="py-code"></pre></div>
     </div>
     <div class="infobox"><div class="infobox-lbl">架構說明</div><div id="py-explain"></div></div>
 
-    <!-- Gemini 除錯助手 -->
-    <div class="debug-panel">
-      <div class="debug-title">🤖 Gemini 除錯 & 優化助手</div>
+    <!-- AI 五大強化按鈕 -->
+    <div class="ai-toolkit">
+      <div class="ai-toolkit-title">✨ AI 五大強化（模擬模式即可運作，填 Key 後更精準）</div>
+      <div class="ai-grid">
+        <button class="ai-btn" onclick="aiAnnotate()">
+          <span class="ai-btn-emoji">📝</span>
+          <div class="ai-btn-label">逐行教學註解</div>
+          <div class="ai-btn-desc">每行加新手懂的中文解釋</div>
+        </button>
+        <button class="ai-btn" onclick="aiExplainTechMenu()">
+          <span class="ai-btn-emoji">💡</span>
+          <div class="ai-btn-label">解釋技術項目</div>
+          <div class="ai-btn-desc">點 PROCESS 一項問 AI</div>
+        </button>
+        <button class="ai-btn" onclick="aiUpgradeAdvanced()">
+          <span class="ai-btn-emoji">📈</span>
+          <div class="ai-btn-label">升級進階版</div>
+          <div class="ai-btn-desc">多閾值＋移動平均＋LSTM</div>
+        </button>
+        <button class="ai-btn" onclick="aiQuiz()">
+          <span class="ai-btn-emoji">🎓</span>
+          <div class="ai-btn-label">出題考我</div>
+          <div class="ai-btn-desc">3 題理解測驗</div>
+        </button>
+      </div>
+      <div class="ai-output" id="aiOutput">✨ 點上方任一按鈕，AI 助教會在這裡回覆。</div>
+    </div>
+
+    <!-- 貼錯誤訊息修程式（獨立區）-->
+    <div class="fix-error-box">
+      <div class="fix-error-title">🔧 程式跑錯了？貼錯誤訊息給 AI 修</div>
+      <textarea class="fix-error-input" id="errorPaste" placeholder="把 Colab 顯示的紅色錯誤訊息貼這裡，例如：&#10;NameError: name 'np' is not defined&#10;TypeError: unsupported operand type..."></textarea>
+      <button class="tool-btn" style="margin-top:8px" onclick="aiFixError()">🩹 智慧修復</button>
+    </div>
+
+    <!-- 自由問答 -->
+    <div class="debug-panel" style="margin-top:14px">
+      <div class="debug-title">💬 自由問 AI</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
-        <button class="qbtn" onclick="geminiDebugAction('檢查錯誤')">🐞 檢查錯誤</button>
+        <button class="qbtn" onclick="geminiDebugAction('檢查錯誤')">🐞 檢查潛在錯誤</button>
         <button class="qbtn" onclick="geminiDebugAction('最佳化建議')">⚡ 效能優化</button>
         <button class="qbtn" onclick="geminiDebugAction('重構改善')">🏗️ 重構建議</button>
-        <button class="qbtn" onclick="geminiDebugAction('Colab適配')">☁️ Colab診斷</button>
+        <button class="qbtn" onclick="geminiDebugAction('Colab適配')">☁️ Colab 診斷</button>
       </div>
       <textarea id="customDebugQuestion" rows="2" placeholder="自訂問題，例如：如何改進錯誤處理？" style="width:100%;background:var(--s2);border:1px solid var(--b2);border-radius:8px;padding:8px;color:var(--tx);font-size:12px"></textarea>
       <button class="qbtn" style="margin-top:6px" onclick="geminiDebugAction('自訂')">💬 送出自訂詢問</button>
-      <div class="ld" id="debugLoading" style="margin:8px 0"><div class="sp"></div>Gemini 分析中...</div>
-      <div class="debug-output" id="debugOutput">✨ 點擊上方按鈕，將對目前程式碼進行分析（模式取決於API Key設定）。</div>
+      <div class="ld" id="debugLoading" style="margin:8px 0"><div class="sp"></div>AI 分析中...</div>
+      <div class="debug-output" id="debugOutput">點上方按鈕，會對目前程式碼進行分析。</div>
     </div>
   </div>
   <button class="btn btn-colab" onclick="goStep(4)">☁️ 前往 Colab 執行 →</button>
@@ -190,13 +358,27 @@ textarea{width:100%;min-height:90px;background:transparent;border:none;outline:n
 
 <!-- 步驟4：Colab 部署 -->
 <div class="panel" id="panel-4">
-  <div class="card" style="text-align:center">
-    <div style="font-size:2rem">☁️</div>
-    <div style="font-weight:700;margin:8px 0">複製程式碼，貼上 Colab 立即執行</div>
-    <div style="display:flex;gap:12px;justify-content:center;margin:12px 0">
-      <button class="btn btn-colab" onclick="window.open('https://colab.research.google.com/notebook#create=true','_blank')">📓 開啟 Colab</button>
-      <button class="btn btn-go" onclick="copyColabCode()">📋 複製 Colab 專用程式碼</button>
+  <div class="card">
+    <div style="text-align:center;font-size:2.2rem">☁️</div>
+    <div style="font-weight:700;margin:8px 0;text-align:center;font-size:16px">三條路把程式碼帶到 Colab 執行</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:16px 0">
+      <div style="background:var(--s2);border:1px solid var(--b2);border-radius:10px;padding:14px">
+        <div style="font-weight:600;margin-bottom:6px;font-size:13px">⭐ 推薦：下載 .ipynb</div>
+        <div style="font-size:11.5px;color:var(--tx2);margin-bottom:10px;line-height:1.5">最不會出錯。下載後到 Colab → 檔案 → 上傳筆記本，整份程式直接帶入。</div>
+        <button class="tool-btn tool-btn-primary" style="width:100%" onclick="downloadIpynb()">⬇️ 下載 .ipynb</button>
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--b2);border-radius:10px;padding:14px">
+        <div style="font-weight:600;margin-bottom:6px;font-size:13px">📋 複製貼上</div>
+        <div style="font-size:11.5px;color:var(--tx2);margin-bottom:10px;line-height:1.5">複製程式碼，到 Colab 新筆記本 Ctrl+V 貼上。</div>
+        <button class="tool-btn" style="width:100%" onclick="copyAndOpenColab()">📋 複製 + 開啟 Colab</button>
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--b2);border-radius:10px;padding:14px">
+        <div style="font-weight:600;margin-bottom:6px;font-size:13px">🌐 只開 Colab</div>
+        <div style="font-size:11.5px;color:var(--tx2);margin-bottom:10px;line-height:1.5">已經有 Colab，自己處理。</div>
+        <button class="tool-btn" style="width:100%" onclick="window.open('https://colab.research.google.com/notebook#create=true','_blank')">🌐 開啟 Colab</button>
+      </div>
     </div>
+    <div style="font-size:11.5px;color:var(--tx2);margin:6px 0 8px">📜 程式碼預覽：</div>
     <div class="mini-code" id="s4-preview" style="text-align:left"></div>
   </div>
 </div>
@@ -224,12 +406,14 @@ const toggleBtn = document.getElementById('toggleApiModeBtn');
     keyInput.value = savedKey;
     useRealGemini = true;
     apiStatusSpan.innerHTML = '✅ 真實 Gemini API 模式已啟用 (gemini-2.0-flash)';
-    toggleBtn.innerHTML = '🔁 目前: 真實Gemini模式';
+    toggleBtn.innerHTML = '🔁 切換至模擬模式';
   } else {
     useRealGemini = false;
-    apiStatusSpan.innerHTML = '⚙️ 模擬模式 (輸入有效API Key並重新整理? 或按下方按鈕切換)';
-    toggleBtn.innerHTML = '🔁 目前: 模擬模式';
+    apiStatusSpan.innerHTML = '⚙️ 模擬模式（內建引擎，無需 API Key）';
+    toggleBtn.innerHTML = '🔁 切換至真實 Gemini';
   }
+  // v4: 同步指示器
+  setTimeout(updateApiModeIndicator, 0);
 })();
 
 function toggleApiMode() {
@@ -239,14 +423,17 @@ function toggleApiMode() {
     useRealGemini = true;
     localStorage.setItem('gemini_key', newKey);
     apiStatusSpan.innerHTML = '✅ 真實 Gemini API 模式已啟用，可開始生成';
-    toggleBtn.innerHTML = '🔁 目前: 真實Gemini模式';
+    toggleBtn.innerHTML = '🔁 切換至模擬模式';
+    toast('已切換到真實 Gemini API', 'success');
   } else {
     geminiApiKey = '';
     useRealGemini = false;
     localStorage.removeItem('gemini_key');
     apiStatusSpan.innerHTML = '⚙️ 已切換至模擬模式 (免金鑰)';
-    toggleBtn.innerHTML = '🔁 目前: 模擬模式';
+    toggleBtn.innerHTML = '🔁 切換至真實 Gemini';
+    toast('已切換到模擬模式', 'info');
   }
+  updateApiModeIndicator();
 }
 
 // ---------- 呼叫真實 Gemini API (支援 JSON 與純文字) ----------
@@ -443,7 +630,10 @@ async function runIPOGeneration() {
     document.getElementById('cp').innerHTML = newIPO.process.map(x => `<div class="iitem"><span class="ibullet"></span>${escapeHtml(x)}</div>`).join('');
     document.getElementById('co').innerHTML = newIPO.output.map(x => `<div class="iitem"><span class="ibullet"></span>${escapeHtml(x)}</div>`).join('');
     document.getElementById('ipoanalysis').innerText = newIPO.analysis || '轉換完成';
+    // v4: 顯示完整度評分
+    renderIPOScore(newIPO);
     goStep(2);
+    toast('IPO 架構生成完成！', 'success');
   } catch (err) {
     document.getElementById('err1').innerHTML = `生成失敗: ${err.message}`;
     document.getElementById('err1').classList.add('on');
@@ -456,7 +646,7 @@ async function runIPOGeneration() {
 // 生成單一最完整版 Python 程式碼
 async function generatePythonCodes() {
   if (!ipoData) {
-    alert('請先從步驟1生成IPO架構');
+    toast('請先從步驟 1 生成 IPO 架構', 'warning');
     return;
   }
   const btn = document.querySelector('#panel-2 .btn-go');
@@ -474,7 +664,7 @@ async function generatePythonCodes() {
     renderPythonCode();
     goStep(3);
   } catch (err) {
-    alert('生成Python失敗: ' + err.message);
+    toast('生成 Python 失敗: ' + err.message, 'error');
   } finally {
     if (btn) btn.disabled = false;
     loading.style.display = 'none';
@@ -494,11 +684,11 @@ function renderPythonCode() {
 // Gemini 除錯助手
 async function geminiDebugAction(actionType) {
   const code = document.getElementById('py-code').innerText;
-  if (!code) { alert('無程式碼可分析'); return; }
+  if (!code) { toast('無程式碼可分析', 'warning'); return; }
   let question = document.getElementById('customDebugQuestion').value.trim();
   let prompt = '';
   if (actionType === '自訂') {
-    if (!question) { alert('請輸入自訂問題'); return; }
+    if (!question) { toast('請輸入自訂問題', 'warning'); return; }
     prompt = `你是一位Python與IPO專家，請回答以下問題，程式碼如下：\n${code}\n問題：${question}`;
   } else {
     prompt = `請對以下Python程式碼進行「${actionType}」分析，並給出具體建議（繁體中文）。\n程式碼：\n${code}\n領域背景：${domain}\nIPO資訊：輸入${JSON.stringify(ipoData?.input||[])}，處理${JSON.stringify(ipoData?.process||[])}，輸出${JSON.stringify(ipoData?.output||[])}`;
@@ -532,11 +722,11 @@ async function geminiDebugAction(actionType) {
 function copyCurrentCode() {
   const code = document.getElementById('py-code').innerText;
   navigator.clipboard.writeText(code);
-  alert('已複製目前版本的程式碼');
+  toast('已複製程式碼', 'success');
 }
 function copyColabCode() {
   if (pyCache && pyCache.code) navigator.clipboard.writeText(pyCache.code);
-  else alert('尚未生成 Colab 程式碼');
+  else toast('尚未生成程式碼', 'warning');
 }
 function goStep(step) {
   currentStep = step;
@@ -551,12 +741,17 @@ function goStep(step) {
 }
 function setDomain(d) {
   domain = d;
-  document.querySelectorAll('.dbtn').forEach(btn => btn.classList.remove('active'));
-  if (d === '環境工程（河川水質監測）') document.getElementById('d-env').classList.add('active');
-  else if (d === '植物醫學（病蟲害診斷）') document.getElementById('d-plant').classList.add('active');
-  else if (d === '水產養殖（智慧魚塭管理）') document.getElementById('d-aqua').classList.add('active');
-  else if (d === '智慧城市（交通與空氣品質整合監測）') document.getElementById('d-city').classList.add('active');
-  else document.getElementById('d-none').classList.add('active');
+  document.querySelectorAll('.dom-card').forEach(btn => btn.classList.remove('active'));
+  const map = {
+    '': 'd-none',
+    '環境工程（河川水質監測）': 'd-env',
+    '植物醫學（病蟲害診斷）': 'd-plant',
+    '水產養殖（智慧魚塭管理）': 'd-aqua',
+    '智慧城市（交通與空氣品質整合監測）': 'd-city'
+  };
+  const id = map[d] || 'd-none';
+  const el = document.getElementById(id);
+  if (el) el.classList.add('active');
 }
 function loadExample(type) {
   const examples = {
@@ -583,6 +778,437 @@ function clearMindmap() {
 function escapeHtml(str) {
   return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
 }
+
+// ============================================================
+// v4 新增：Toast、可折疊區、API 指示器、完整度評分
+// ============================================================
+function toast(msg, type='info') {
+  const t = document.createElement('div');
+  t.className = `toast toast-${type}`;
+  t.textContent = msg;
+  document.getElementById('toast-container').appendChild(t);
+  requestAnimationFrame(() => t.classList.add('show'));
+  setTimeout(() => {
+    t.classList.remove('show');
+    setTimeout(() => t.remove(), 320);
+  }, 3200);
+}
+
+function toggleCollapse(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+
+function updateApiModeIndicator() {
+  const ind = document.getElementById('apiModeIndicator');
+  if (!ind) return;
+  if (useRealGemini && geminiApiKey) {
+    ind.textContent = '✅ 真實 Gemini 已啟用';
+    ind.style.background = 'rgba(16,185,129,.15)';
+    ind.style.color = '#86efac';
+    ind.style.borderColor = 'rgba(16,185,129,.4)';
+  } else {
+    ind.textContent = '模擬模式運作中';
+    ind.style.background = 'rgba(245,158,11,.15)';
+    ind.style.color = '#fcd34d';
+    ind.style.borderColor = 'rgba(245,158,11,.3)';
+  }
+}
+
+function renderIPOScore(ipo) {
+  let score = 0;
+  const sug = [];
+  if (ipo.input.length >= 3) score += 25; else sug.push(`INPUT 只有 ${ipo.input.length} 項，建議補到 3 項以上`);
+  if (ipo.process.length >= 3) score += 25; else sug.push(`PROCESS 只有 ${ipo.process.length} 項，建議補到 3 項以上`);
+  if (ipo.output.length >= 3) score += 25; else sug.push(`OUTPUT 只有 ${ipo.output.length} 項，建議補到 3 項以上`);
+  const sizes = [ipo.input.length, ipo.process.length, ipo.output.length];
+  const gap = Math.max(...sizes) - Math.min(...sizes);
+  if (gap <= 1) score += 25; else sug.push('三段項目數差距較大，建議讓 I/P/O 數量更平衡');
+
+  const card = document.getElementById('ipoScoreCard');
+  const circle = document.getElementById('scoreCircle');
+  const title = document.getElementById('scoreTitle');
+  const list = document.getElementById('scoreSuggestions');
+
+  circle.textContent = score;
+  circle.className = 'score-circle ' + (score >= 75 ? 'score-good' : score >= 50 ? 'score-ok' : 'score-low');
+  title.textContent = score >= 75 ? '✅ IPO 結構良好，可直接生成程式' : score >= 50 ? '⚠️ IPO 大致完整，可微調' : '❌ IPO 過於精簡，建議補充內容';
+  list.innerHTML = sug.length ? '改善建議：' + sug.join('；') : '結構平衡，三個區塊都有 3 項以上且差距不大。';
+  card.style.display = 'flex';
+}
+
+// ============================================================
+// v4 新增：下載 .ipynb（最關鍵的 Colab 友善功能）
+// ============================================================
+function downloadIpynb() {
+  if (!pyCache || !pyCache.code) { toast('請先生成 Python 程式碼', 'warning'); return; }
+  const code = pyCache.code;
+  const lines = code.split('\n');
+  const source = lines.map((l, i) => i < lines.length - 1 ? l + '\n' : l);
+
+  // 額外加一個 markdown 標題 cell
+  const titleMd = `# ${domain || 'IPO 模組'}\n\n> 由 IPO 工具生成 | 心智圖 → IPO → Python → Colab\n\n按 ▶️ 執行所有 cell，等套件安裝完即可看到互動視覺化。`;
+
+  const ipynb = {
+    cells: [
+      { cell_type: 'markdown', metadata: {}, source: titleMd.split('\n').map((l,i,a) => i<a.length-1?l+'\n':l) },
+      { cell_type: 'code', execution_count: null, metadata: {}, outputs: [], source: source }
+    ],
+    metadata: {
+      kernelspec: { display_name: 'Python 3', language: 'python', name: 'python3' },
+      language_info: { name: 'python', version: '3.10' },
+      colab: { provenance: [], toc_visible: true }
+    },
+    nbformat: 4,
+    nbformat_minor: 0
+  };
+
+  const blob = new Blob([JSON.stringify(ipynb, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = (domain ? domain.replace(/[（）\s]/g, '_').substring(0,30) : 'ipo_module') + '.ipynb';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('已下載 .ipynb！到 Colab → 檔案 → 上傳筆記本', 'success');
+}
+
+function copyAndOpenColab() {
+  if (!pyCache || !pyCache.code) { toast('請先生成 Python 程式碼', 'warning'); return; }
+  navigator.clipboard.writeText(pyCache.code).then(() => {
+    toast('已複製程式碼，正在開啟 Colab…', 'success');
+    setTimeout(() => window.open('https://colab.research.google.com/notebook#create=true', '_blank'), 400);
+  }).catch(() => toast('複製失敗，請手動複製', 'error'));
+}
+
+// ============================================================
+// v4 AI 強化 1：逐行教學註解
+// ============================================================
+const annotationRules = [
+  { match: /^!pip install/, note: '👉 開頭的「!」代表執行命令列指令，這行請 Colab 幫忙安裝套件' },
+  { match: /^import numpy/, note: '👉 載入 numpy 套件（簡稱 np）：處理數字陣列和數學運算' },
+  { match: /^import matplotlib/, note: '👉 載入 matplotlib 畫圖工具' },
+  { match: /^import ipywidgets/, note: '👉 載入 Colab 互動元件（滑桿、下拉選單等）' },
+  { match: /^class \w+/, note: '👉 定義類別（class）：把整套系統包成一個物件，可生出多個實例' },
+  { match: /def __init__/, note: '👉 建構式：建立物件時自動執行，這裡設定 INPUT/PROCESS/OUTPUT 三個清單' },
+  { match: /def get_input/, note: '👉 INPUT 階段：產生 24 小時模擬感測資料（雙峰型，模擬尖峰）' },
+  { match: /def process/, note: '👉 PROCESS 階段：判斷哪些時段超過閾值（True/False）' },
+  { match: /def output/, note: '👉 OUTPUT 階段：畫圖 + 印出統計結果' },
+  { match: /def run/, note: '👉 主流程：把 get_input → process → output 串成一條龍' },
+  { match: /np\.random\.seed/, note: '👉 固定亂數種子，每次跑出來的數據完全一樣，方便除錯' },
+  { match: /np\.arange/, note: '👉 產生 [0,1,2,...,n-1] 的整數數列' },
+  { match: /np\.exp/, note: '👉 指數函式，用來模擬鐘形（高斯）分佈' },
+  { match: /plt\.subplots/, note: '👉 建立多子圖排版（2 行 1 列）' },
+  { match: /\.axhline/, note: '👉 畫一條水平線（這裡用來標示閾值）' },
+  { match: /\.fill_between/, note: '👉 在曲線與閾值之間塗色（標出超標區）' },
+  { match: /plt\.tight_layout/, note: '👉 自動調整子圖間距，避免標籤重疊' },
+  { match: /plt\.show/, note: '👉 把圖顯示出來（Colab 會自動嵌入）' },
+  { match: /widgets\.IntSlider/, note: '👉 整數滑桿：可拖動的數值選擇器' },
+  { match: /widgets\.interact/, note: '👉 自動把函式包成互動 UI，拖動滑桿會即時重算' },
+  { match: /列表生成式|for.*in.*\]/, note: '👉 列表生成式：用一行 for 迴圈產生新列表' },
+];
+
+function annotateCodeLocal(code) {
+  return code.split('\n').map(line => {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) return line;
+    for (const r of annotationRules) {
+      if (r.match.test(trimmed)) {
+        const indent = (line.match(/^(\s*)/) || ['',''])[1];
+        return line + '\n' + indent + '# ' + r.note;
+      }
+    }
+    return line;
+  }).join('\n');
+}
+
+async function aiAnnotate() {
+  if (!pyCache || !pyCache.code) { toast('請先生成 Python 程式碼', 'warning'); return; }
+  const out = document.getElementById('aiOutput');
+  out.classList.add('show');
+  out.innerHTML = '<h4>📝 逐行教學註解</h4><div>分析中...</div>';
+  try {
+    let annotated;
+    if (useRealGemini && geminiApiKey) {
+      const prompt = `你是 Python 教學助教。請對以下程式碼「逐行」加入繁體中文註解（在每個關鍵語法上方加 # 開頭的解釋），對象是 PDF 懶人包 30 分鐘入門新手，註解要簡短易懂、用比喻說明。只回傳加完註解的完整程式碼，不要 markdown 框、不要額外說明。\n\n程式碼：\n${pyCache.code}`;
+      annotated = await callGeminiText(prompt);
+      annotated = annotated.replace(/^```\w*\n?/gm, '').replace(/```$/gm, '');
+    } else {
+      annotated = annotateCodeLocal(pyCache.code);
+    }
+    out.innerHTML = `<h4>📝 逐行教學註解（${useRealGemini ? '真實 Gemini' : '規則式'}）</h4><pre>${escapeHtml(annotated)}</pre><div style="margin-top:8px"><button class="tool-btn" onclick="(()=>{navigator.clipboard.writeText(\`${annotated.replace(/`/g,'\\`').replace(/\$/g,'\\$')}\`);toast('已複製註解版','success')})()">📋 複製註解版</button></div>`;
+  } catch (err) {
+    out.innerHTML = `<h4>📝 逐行教學註解</h4><div style="color:#fca5a5">錯誤：${err.message}</div>`;
+  }
+}
+
+// ============================================================
+// v4 AI 強化 2：解釋技術項目
+// ============================================================
+const techGlossary = {
+  'LSTM': { desc: '長短期記憶網路，神經網路的一種，擅長處理時序資料（每小時車流、每日溫度）。', why: '比一般神經網路強的地方：有「記憶」，會記得幾小時前發生什麼。', py: 'pip install tensorflow → from tensorflow.keras.layers import LSTM' },
+  'IoT': { desc: '物聯網，讓物理設備（感測器、攝影機、機械）連上網。', why: '本模組的路口車流感測器、空品站都是 IoT 設備。', py: '常用 MQTT 通訊；Python: paho-mqtt' },
+  'PM2.5': { desc: '直徑 < 2.5 微米的細懸浮微粒，會深入肺部。', why: '空污關鍵指標，WHO 建議年均 < 5 μg/m³。', py: '從感測器或環保署 OpenData API 取得' },
+  'GIS': { desc: '地理資訊系統，把資料疊在地圖上分析。', why: '把車流熱點與污染熱點疊圖，看相關性。', py: 'pip install folium 或 geopandas' },
+  'CNN': { desc: '卷積神經網路，影像辨識主力。', why: '葉片病害辨識、衛星影像分析。', py: 'from tensorflow.keras.layers import Conv2D' },
+  'ipywidgets': { desc: 'Jupyter/Colab 互動元件套件。', why: '純 Python 做出滑桿、按鈕、下拉。', py: 'widgets.interact(func, x=(0,100))' },
+  'matplotlib': { desc: 'Python 最主流的繪圖套件。', why: '畫折線、長條、散布、熱圖都行。', py: 'plt.plot(x, y); plt.show()' },
+  '感測器': { desc: '把物理量（溫度、濕度、PM2.5）轉成電訊號的元件。', why: 'IPO 的 INPUT 通常從感測器來。', py: 'Raspberry Pi + GPIO 或 Arduino' },
+  '閾值': { desc: '判斷正常/異常的分界值。', why: '超過 → 警報，未超過 → 正常。', py: 'if v > threshold: alert()' },
+  '異常偵測': { desc: '從正常資料中找出不對勁的點。', why: '用閾值、統計、AI 模型都行。', py: 'sklearn.ensemble.IsolationForest' },
+  '時序預測': { desc: '從歷史資料預測未來。', why: 'LSTM、ARIMA、Prophet 都是工具。', py: 'pip install prophet' },
+};
+
+function explainTechLocal(term) {
+  const cleaned = term.replace(/[（）()、，,。:：]/g, ' ').trim();
+  for (const [key, info] of Object.entries(techGlossary)) {
+    if (cleaned.includes(key) || key.toLowerCase().includes(cleaned.toLowerCase().split(' ')[0])) {
+      return { found: true, term: key, ...info };
+    }
+  }
+  return { found: false, term };
+}
+
+function aiExplainTechMenu() {
+  if (!ipoData) { toast('請先生成 IPO', 'warning'); return; }
+  const out = document.getElementById('aiOutput');
+  out.classList.add('show');
+  const items = [...ipoData.process, ...ipoData.input];
+  const list = items.map((x, i) => `<button class="quiz-opt" onclick="aiExplainTech(${i})">${escapeHtml(x)}</button>`).join('');
+  window._explainItems = items;
+  out.innerHTML = `<h4>💡 想問哪個技術？點下方任一項：</h4>${list}`;
+}
+
+async function aiExplainTech(idx) {
+  const term = window._explainItems[idx];
+  const out = document.getElementById('aiOutput');
+  out.innerHTML = `<h4>💡 解釋：${escapeHtml(term)}</h4><div>查詢中...</div>`;
+  try {
+    let html;
+    if (useRealGemini && geminiApiKey) {
+      const prompt = `你是技術科普老師。請用繁體中文向 PDF 懶人包 30 分鐘入門的新手解釋這個技術概念：「${term}」。領域背景：${domain}。請涵蓋三段：1) 是什麼（用比喻），2) 為什麼這個模組需要它，3) Python 怎麼簡單實作一版。總字數 150-250 字，避免艱深術語。`;
+      const text = await callGeminiText(prompt);
+      html = `<div style="white-space:pre-wrap;line-height:1.7">${escapeHtml(text)}</div>`;
+    } else {
+      const info = explainTechLocal(term);
+      if (info.found) {
+        html = `<div><strong>${info.term}</strong></div><div style="margin-top:8px">📖 <strong>是什麼：</strong>${info.desc}</div><div style="margin-top:6px">💡 <strong>為什麼需要：</strong>${info.why}</div><div style="margin-top:6px">🐍 <strong>Python 實作：</strong><code>${info.py}</code></div>`;
+      } else {
+        html = `<div>📚 「${term}」是專業概念，模擬模式內建字典沒有它。建議：</div><div style="margin-top:6px">• 申請免費 Gemini Key 取得 AI 解釋</div><div>• 或直接 Google「${term} python 教學」</div>`;
+      }
+    }
+    out.innerHTML = `<h4>💡 解釋：${escapeHtml(term)}</h4>${html}<div style="margin-top:10px"><button class="tool-btn" onclick="aiExplainTechMenu()">← 換一個問</button></div>`;
+  } catch (err) {
+    out.innerHTML = `<h4>💡 解釋失敗</h4><div style="color:#fca5a5">${err.message}</div>`;
+  }
+}
+
+// ============================================================
+// v4 AI 強化 3：升級進階版
+// ============================================================
+function buildAdvancedCode(ipo, domainHint) {
+  const i = JSON.stringify(ipo.input);
+  const p = JSON.stringify(ipo.process);
+  const o = JSON.stringify(ipo.output);
+  return `# ${domainHint || 'IPO'} | 進階版 (多閾值 + 移動平均 + LSTM 預留)
+!pip install matplotlib ipywidgets numpy pandas -q
+import numpy as np, pandas as pd
+import matplotlib.pyplot as plt
+import ipywidgets as widgets
+
+class AdvancedIPOSystem:
+    """進階版：支援多感測通道、移動平均平滑、雙閾值風險分級"""
+    def __init__(self):
+        self.input_items   = ${i}
+        self.process_items = ${p}
+        self.output_items  = ${o}
+
+    # ----- INPUT: 模擬「雙感測通道」（主訊號 + 相關訊號）-----
+    def get_input(self, hours=48):
+        np.random.seed(42)
+        t = np.arange(hours)
+        primary = 50 + 30*np.exp(-((t%24-8)**2)/8) + 35*np.exp(-((t%24-18)**2)/8)
+        primary += np.random.normal(0, 4, hours)
+        # 相關通道（PM2.5 隨車流上升）
+        secondary = 15 + 0.4*primary + np.random.normal(0, 3, hours)
+        return pd.DataFrame({"hour": t, "primary": primary, "secondary": secondary})
+
+    # ----- PROCESS: 移動平均 + 雙閾值風險分級 -----
+    def process(self, df, p_th=60, s_th=35, window=3):
+        df["primary_ma"] = df["primary"].rolling(window, min_periods=1).mean()
+        df["secondary_ma"] = df["secondary"].rolling(window, min_periods=1).mean()
+        # 風險等級 = 兩個感測都超標 → 2，單一超標 → 1，皆正常 → 0
+        df["risk"] = (df["primary_ma"] > p_th).astype(int) + (df["secondary_ma"] > s_th).astype(int)
+        # TODO: 此處可接 LSTM 預測（範例註解）
+        # from tensorflow.keras.layers import LSTM, Dense
+        # from tensorflow.keras.models import Sequential
+        # model = Sequential([LSTM(32, input_shape=(seq_len, 2)), Dense(1)])
+        return df
+
+    # ----- OUTPUT: 三聯圖 + 風險統計 -----
+    def output(self, df, p_th, s_th):
+        fig, ax = plt.subplots(3, 1, figsize=(11, 8))
+        ax[0].plot(df["hour"], df["primary"], color="#4f8ef7", alpha=0.4, label="原始")
+        ax[0].plot(df["hour"], df["primary_ma"], color="#4f8ef7", linewidth=2.2, label="移動平均")
+        ax[0].axhline(p_th, color="red", linestyle="--", label=f"主閾值 {p_th}")
+        ax[0].set_title("主感測通道（例：車流量）"); ax[0].legend(loc="upper right"); ax[0].grid(alpha=0.3)
+
+        ax[1].plot(df["hour"], df["secondary"], color="#10b981", alpha=0.4, label="原始")
+        ax[1].plot(df["hour"], df["secondary_ma"], color="#10b981", linewidth=2.2, label="移動平均")
+        ax[1].axhline(s_th, color="red", linestyle="--", label=f"相關閾值 {s_th}")
+        ax[1].set_title("相關感測通道（例：PM2.5）"); ax[1].legend(loc="upper right"); ax[1].grid(alpha=0.3)
+
+        colors = ["#10b981" if r==0 else "#f59e0b" if r==1 else "#ef4444" for r in df["risk"]]
+        ax[2].bar(df["hour"], df["risk"], color=colors)
+        ax[2].set_title("複合風險（0安全 / 1注意 / 2警報）"); ax[2].set_ylim(0, 2.5); ax[2].grid(alpha=0.3)
+        plt.tight_layout(); plt.show()
+
+        warn = (df["risk"] >= 1).sum()
+        crit = (df["risk"] == 2).sum()
+        print("="*50)
+        print(f"📥 INPUT  : {self.input_items}")
+        print(f"⚙️ PROCESS: {self.process_items}")
+        print(f"📊 OUTPUT : {self.output_items}")
+        print("="*50)
+        print(f"⚠️ 注意 {warn} 小時 / 🚨 警報 {crit} 小時")
+        print("💡 進階版相比基礎版：(1)雙通道 (2)移動平均 (3)三級風險 (4)預留 LSTM 接口")
+
+    def run(self, p_th=60, s_th=35, window=3):
+        df = self.get_input()
+        df = self.process(df, p_th, s_th, window)
+        self.output(df, p_th, s_th)
+
+# ===== Colab 互動：三個滑桿 =====
+sys = AdvancedIPOSystem()
+widgets.interact(
+    sys.run,
+    p_th=widgets.IntSlider(min=30, max=100, step=5, value=60, description="主閾值"),
+    s_th=widgets.IntSlider(min=15, max=70, step=5, value=35, description="相關閾值"),
+    window=widgets.IntSlider(min=1, max=8, step=1, value=3, description="平滑視窗")
+);`;
+}
+
+async function aiUpgradeAdvanced() {
+  if (!pyCache || !pyCache.code) { toast('請先生成基礎完整版', 'warning'); return; }
+  if (!ipoData) { toast('請先生成 IPO', 'warning'); return; }
+  const out = document.getElementById('aiOutput');
+  out.classList.add('show');
+  out.innerHTML = '<h4>📈 升級進階版</h4><div>生成中...</div>';
+  try {
+    let advCode;
+    if (useRealGemini && geminiApiKey) {
+      const prompt = `根據以下 IPO 架構，產生「進階版」Python 程式碼。要求：(1) 用 pandas DataFrame 管理雙感測通道 (2) PROCESS 加入移動平均平滑 (3) 風險分 3 級（0/1/2）(4) 視覺化用 3 子圖 (5) 預留 LSTM 註解 (6) ipywidgets 3 個滑桿。領域：${domain}。INPUT：${ipoData.input.join('、')}。PROCESS：${ipoData.process.join('、')}。OUTPUT：${ipoData.output.join('、')}。只回傳完整 Python 程式碼，不要 markdown 框。`;
+      advCode = await callGeminiText(prompt);
+      advCode = advCode.replace(/^```\w*\n?/gm, '').replace(/```$/gm, '');
+    } else {
+      advCode = buildAdvancedCode(ipoData, domain);
+    }
+    pyCache = { filename: 'ipo_advanced.py', code: advCode };
+    renderPythonCode();
+    out.innerHTML = `<h4>📈 已升級為進階版 ${useRealGemini ? '(真實 Gemini)' : '(模擬模式)'}</h4><div>主要變更：</div><ul style="margin:8px 0 0 20px"><li>新增第二感測通道（雙變數）</li><li>PROCESS 加入移動平均平滑</li><li>風險分 3 級（安全/注意/警報）</li><li>視覺化升級為 3 子圖</li><li>預留 LSTM 接口註解</li><li>互動滑桿從 1 個 → 3 個</li></ul><div style="margin-top:10px">上方程式碼區已更新為進階版，可繼續下載 .ipynb。</div>`;
+    toast('已升級進階版！', 'success');
+  } catch (err) {
+    out.innerHTML = `<h4>升級失敗</h4><div style="color:#fca5a5">${err.message}</div>`;
+  }
+}
+
+// ============================================================
+// v4 AI 強化 4：出題考我
+// ============================================================
+const quizPool = [
+  { q: 'IPO 三個字母分別代表什麼？', opts: ['Input / Process / Output', 'Integer / Print / Object', 'Initialize / Process / Optimize'], correct: 0, explain: 'IPO = 輸入 → 處理 → 輸出，是程式設計的萬用骨架。' },
+  { q: 'Colab 程式中「!pip install」開頭的「!」代表什麼？', opts: ['註解符號', '執行 shell 命令', '錯誤標記'], correct: 1, explain: '在 Jupyter/Colab 中，「!」開頭等於在終端機跑指令。' },
+  { q: '為什麼程式中要寫 np.random.seed(42)？', opts: ['加密資料', '讓每次跑出來的「亂數」相同，方便除錯', '產生 42 個亂數'], correct: 1, explain: '固定種子後，亂數序列可重現，便於比對結果。' },
+  { q: 'widgets.interact 的作用是？', opts: ['加密程式碼', '把函式包成可互動 UI（自動產生滑桿）', '檢查語法錯誤'], correct: 1, explain: 'ipywidgets 會根據函式參數型別自動生成對應 UI 元件。' },
+  { q: 'class 和 def 的差別是？', opts: ['一樣的東西', 'class 是藍圖可生出多個物件，def 是動作', 'def 比較快'], correct: 1, explain: 'class 是物件的「模板」，def 是定義一個「函式（動作）」。' },
+  { q: 'matplotlib 的 plt.show() 用途？', opts: ['儲存圖檔', '顯示圖（在 Colab 會自動嵌入）', '清空畫布'], correct: 1, explain: 'show() 將累積的繪圖指令渲染並輸出；Colab 通常會自動顯示。' },
+  { q: 'PM2.5 是什麼？', opts: ['一種交通號誌', '直徑 < 2.5 微米的細懸浮微粒', '一種感測器型號'], correct: 1, explain: 'PM2.5 會深入肺部影響健康，WHO 建議年均 < 5 μg/m³。' },
+  { q: 'LSTM 適合處理哪類資料？', opts: ['圖片辨識', '時序資料（每小時車流、每日股價）', '加密解密'], correct: 1, explain: 'LSTM 有記憶單元，能保留時間序列中的長期依賴關係。' },
+];
+
+function aiQuiz() {
+  const out = document.getElementById('aiOutput');
+  out.classList.add('show');
+  const shuffled = [...quizPool].sort(() => Math.random() - 0.5).slice(0, 3);
+  window._quizData = shuffled;
+  let html = '<h4>🎓 來測驗 3 題，看你學會了多少：</h4>';
+  shuffled.forEach((q, qi) => {
+    html += `<div class="quiz-card"><div class="quiz-q">Q${qi+1}. ${escapeHtml(q.q)}</div>`;
+    q.opts.forEach((opt, oi) => {
+      html += `<div class="quiz-opt" id="q${qi}o${oi}" onclick="checkQuiz(${qi},${oi})">${String.fromCharCode(65+oi)}. ${escapeHtml(opt)}</div>`;
+    });
+    html += `<div class="quiz-explain" id="q${qi}exp"></div></div>`;
+  });
+  html += '<div style="margin-top:8px;font-size:11.5px;color:var(--tx2)">點選項目立即知道答案，每題都會解釋為什麼。</div>';
+  out.innerHTML = html;
+}
+
+function checkQuiz(qi, oi) {
+  const data = window._quizData[qi];
+  const isCorrect = oi === data.correct;
+  // 標示所有選項
+  for (let i = 0; i < data.opts.length; i++) {
+    const el = document.getElementById(`q${qi}o${i}`);
+    if (i === data.correct) el.classList.add('correct');
+    else if (i === oi) el.classList.add('wrong');
+    el.onclick = null; // 鎖住，不能重點
+  }
+  const exp = document.getElementById(`q${qi}exp`);
+  exp.textContent = (isCorrect ? '✅ 答對了！' : '❌ 答錯了。') + ' ' + data.explain;
+  exp.classList.add('show');
+}
+
+// ============================================================
+// v4 AI 強化 5：智慧錯誤修復
+// ============================================================
+async function aiFixError() {
+  const errText = document.getElementById('errorPaste').value.trim();
+  if (!errText) { toast('請先貼上錯誤訊息', 'warning'); return; }
+  if (!pyCache || !pyCache.code) { toast('請先生成 Python 程式碼', 'warning'); return; }
+  const out = document.getElementById('aiOutput');
+  out.classList.add('show');
+  out.innerHTML = '<h4>🔧 智慧錯誤修復</h4><div>分析中...</div>';
+  try {
+    let result;
+    if (useRealGemini && geminiApiKey) {
+      const prompt = `你是 Python 除錯助教，目標讀者是 30 分鐘入門新手。以下是程式碼與錯誤訊息，請用繁體中文：(1) 用一句話說錯誤的原因 (2) 給「具體要改哪一行、改成什麼」的建議 (3) 附上修正後可貼回 Colab 的關鍵片段。\n\n程式碼：\n${pyCache.code}\n\n錯誤訊息：\n${errText}`;
+      const text = await callGeminiText(prompt);
+      result = `<div style="white-space:pre-wrap;line-height:1.7">${escapeHtml(text)}</div>`;
+    } else {
+      // 規則式分析常見錯誤
+      const diag = diagnoseLocal(errText);
+      result = `<div><strong>偵測類型：</strong>${diag.type}</div><div style="margin-top:8px">📖 <strong>原因：</strong>${diag.cause}</div><div style="margin-top:6px">🛠️ <strong>建議：</strong>${diag.fix}</div>${diag.snippet ? `<pre>${escapeHtml(diag.snippet)}</pre>` : ''}<div style="margin-top:8px;font-size:11.5px;color:var(--tx2)">💡 模擬模式內建常見錯誤庫；申請免費 Gemini Key 可獲得針對你的程式碼的精準建議。</div>`;
+    }
+    out.innerHTML = `<h4>🔧 智慧錯誤修復</h4>${result}`;
+  } catch (err) {
+    out.innerHTML = `<h4>修復失敗</h4><div style="color:#fca5a5">${err.message}</div>`;
+  }
+}
+
+function diagnoseLocal(err) {
+  const e = err.toLowerCase();
+  if (e.includes('nameerror') && e.includes('np')) return { type: 'NameError: np 未定義', cause: '你的程式裡用了 np 但沒有 import numpy as np。', fix: '在程式碼最上方加入 import numpy as np。', snippet: 'import numpy as np' };
+  if (e.includes('nameerror') && e.includes('plt')) return { type: 'NameError: plt 未定義', cause: '用了 plt 但沒匯入 matplotlib。', fix: '加上 import matplotlib.pyplot as plt。', snippet: 'import matplotlib.pyplot as plt' };
+  if (e.includes('nameerror') && e.includes('widgets')) return { type: 'NameError: widgets 未定義', cause: '用了 widgets 但沒匯入 ipywidgets。', fix: '加上 import ipywidgets as widgets。', snippet: 'import ipywidgets as widgets' };
+  if (e.includes('modulenotfounderror')) {
+    const m = err.match(/No module named ['"](\w+)['"]/i);
+    const mod = m ? m[1] : '未知套件';
+    return { type: 'ModuleNotFoundError', cause: `找不到 ${mod} 套件，可能還沒安裝。`, fix: `在 Colab 第一行加：!pip install ${mod} -q`, snippet: `!pip install ${mod} -q` };
+  }
+  if (e.includes('indentationerror')) return { type: 'IndentationError 縮排錯誤', cause: 'Python 對縮排很嚴格，這行的縮排空格不對。', fix: '檢查這行前面的空格數，跟同層級程式碼一致（建議統一用 4 個空格）。', snippet: null };
+  if (e.includes('syntaxerror')) return { type: 'SyntaxError 語法錯誤', cause: '程式有語法錯誤，常見是少寫冒號、括號沒對齊、引號沒成對。', fix: '看錯誤訊息指出的行號，檢查上一行結尾是否該有 : 或括號是否成對。', snippet: null };
+  if (e.includes('typeerror')) return { type: 'TypeError 型別錯誤', cause: '某個函式收到的參數型別不對。', fix: '檢查函式呼叫時傳進去的參數，例如數字不能跟字串相加，要先用 str() 或 int() 轉型。', snippet: null };
+  if (e.includes('indexerror')) return { type: 'IndexError 索引超出範圍', cause: '存取列表/陣列時索引超出長度。', fix: '在迴圈或存取前加 len() 檢查，或用 -1 表示最後一個元素。', snippet: null };
+  if (e.includes('keyerror')) return { type: 'KeyError 字典鍵不存在', cause: '存取字典時用了不存在的鍵。', fix: '改用 dict.get(key, 預設值) 比較安全；或先用 if key in dict 檢查。', snippet: null };
+  if (e.includes('zerodivision')) return { type: 'ZeroDivisionError 除以零', cause: '分母是 0。', fix: '在除法前加判斷：if denominator != 0:。', snippet: null };
+  if (e.includes('attributeerror')) return { type: 'AttributeError 屬性不存在', cause: '物件沒有這個方法或屬性。', fix: '檢查拼字、或先用 dir(物件) 查可用屬性。', snippet: null };
+  return { type: '未明錯誤類型', cause: '錯誤訊息不在內建字典中。', fix: '建議：(1) 把完整錯誤訊息丟給 ChatGPT / Gemini (2) 申請免費 Gemini Key 用本工具的真實模式 (3) 或 Google 搜尋錯誤關鍵字。', snippet: null };
+}
 </script>
+<!-- Toast 通知容器 -->
+<div id="toast-container"></div>
+
 </body>
 </html>
