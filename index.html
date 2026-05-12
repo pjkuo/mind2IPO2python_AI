@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Gemini AI 工作台｜心智圖→IPO→Python→Colab｜真實API已修復</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg:#0b0e1a; --s1:#131729; --s2:#191f32; --s3:#1f2640;
+  --b1:rgba(255,255,255,0.06); --b2:rgba(255,255,255,0.11); --b3:rgba(255,255,255,0.18);
+  --tx:#dde2f0; --tx2:#7e86a0; --tx3:#454c66;
+  --acc:#4f8ef7; --pur:#7c3aed; --grn:#10b981; --amb:#f59e0b;
+  --inp:#f59e0b; --prc:#4f8ef7; --out:#10b981;
+  --r:12px; --rsm:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;line-height:1.6;padding-bottom:6rem}
+.shell{max-width:1200px;margin:0 auto;padding:2rem 1.25rem 0}
+
+.hdr{text-align:center;padding:2rem 0 2.5rem}
+.hdr-pill{display:inline-flex;align-items:center;gap:7px;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.22);border-radius:20px;padding:4px 14px;font-size:11px;color:var(--acc);letter-spacing:.08em;font-weight:500;margin-bottom:1rem}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--acc);animation:pk 2s infinite}
+@keyframes pk{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:700;background:linear-gradient(135deg,#dde2f0 20%,#5a6282);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
+.badge-gemini{background:rgba(79,142,247,0.2);border:1px solid rgba(79,142,247,0.5);border-radius:30px;padding:2px 12px;font-size:10px;font-weight:600;color:#7bb5ff;margin-left:12px}
+
+.pipe{display:flex;align-items:center;gap:0;margin-bottom:2rem;overflow-x:auto}
+.pipe-node{display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:8px;border:1px solid var(--b2);background:var(--s1);cursor:pointer}
+.pipe-node.active{border-color:rgba(255,255,255,0.25);background:var(--s2)}
+.pipe-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.pipe-txt{font-size:12px;font-weight:500}
+.pipe-arrow{color:var(--tx3);font-size:18px;margin:0 4px}
+.panel{display:none;animation:fadeIn .3s ease}
+.panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--s1);border:1px solid var(--b2);border-radius:var(--r);padding:1.2rem 1.4rem;margin-bottom:1rem}
+.bgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+@media(max-width:580px){.bgrid{grid-template-columns:1fr}}
+.bc{background:var(--s2);border:1px solid var(--b2);border-radius:var(--rsm);padding:.9rem 1rem}
+.bc-title{font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px}
+.tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:12px}
+.tag-i{background:rgba(245,158,11,.12);color:#f59e0b}
+.tag-p{background:rgba(79,142,247,.12);color:#4f8ef7}
+.tag-po{background:rgba(124,58,237,.1);color:#a78bfa}
+.tag-o{background:rgba(16,185,129,.1);color:#10b981}
+textarea{width:100%;min-height:90px;background:transparent;border:none;outline:none;color:var(--tx);font-size:13px;font-family:inherit;line-height:1.6;resize:vertical}
+.qrow{display:flex;gap:7px;flex-wrap:wrap;padding:9px 12px;background:var(--s1);border:1px solid var(--b1);border-radius:var(--rsm);margin-bottom:1rem}
+.qbtn{padding:4px 12px;border-radius:6px;border:1px solid var(--b2);background:transparent;color:var(--tx2);cursor:pointer}
+.qbtn:hover{background:var(--s2);color:var(--tx)}
+.dbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:1rem}
+.dbtn{padding:6px 14px;border-radius:var(--rsm);border:1px solid var(--b2);background:var(--s1);color:var(--tx2);cursor:pointer}
+.dbtn.active{background:rgba(79,142,247,.15);border-color:rgba(79,142,247,.4);color:#7bb5ff}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;border-radius:var(--rsm);border:1px solid var(--b2);background:var(--s1);color:var(--tx2);cursor:pointer;font-size:13px}
+.btn-go{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn-free{background:linear-gradient(135deg,#10b981,#059669);border:none;color:white}
+.btn-gemini{background:linear-gradient(135deg,#1a2a4f,#0f172a);border:1px solid var(--acc);color:#bbd7fb}
+.ld{display:none;align-items:center;gap:8px}
+.sp{width:15px;height:15px;border:2px solid var(--b2);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ipo3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem}
+.icol{border-radius:var(--r);padding:1rem;border:1px solid;min-height:170px}
+.icol.inp{background:rgba(245,158,11,.07);border-color:rgba(245,158,11,.28)}
+.icol.prc{background:rgba(79,142,247,.07);border-color:rgba(79,142,247,.28)}
+.icol.out{background:rgba(16,185,129,.07);border-color:rgba(16,185,129,.28)}
+.iitem{display:flex;gap:6px;font-size:12.5px;margin-bottom:7px}
+.ibullet{width:5px;height:5px;border-radius:50%;margin-top:6px}
+.code-card{background:#0d1117;border:1px solid rgba(124,58,237,.35);border-radius:var(--r);overflow:hidden;margin-bottom:1rem}
+.code-hdr{display:flex;justify-content:space-between;padding:9px 14px;background:rgba(124,58,237,.1)}
+.code-body{padding:1.2rem 1.4rem;overflow-x:auto;max-height:450px}
+.code-body pre{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:#e2e8f0}
+.mini-code{background:#0d1117;border:1px solid var(--grn);border-radius:var(--rsm);padding:.75rem 1rem;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#94a3b8;max-height:320px;overflow:auto;white-space:pre-wrap}
+.infobox{background:var(--s2);border:1px solid var(--b2);border-radius:var(--rsm);padding:.9rem 1.1rem;font-size:13px}
+.debug-panel{background:rgba(79,142,247,0.05);border:1px solid rgba(79,142,247,0.3);border-radius:var(--r);margin-top:1.2rem;padding:1rem}
+.debug-output{background:#0a0c14;border-radius:var(--rsm);padding:12px;font-size:13px;color:#cbd5e1;margin-top:12px;max-height:280px;overflow:auto;white-space:pre-wrap}
+.errmsg{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:var(--rsm);padding:.7rem 1rem;font-size:13px;color:#fca5a5;margin-bottom:.75rem;display:none}
+.key-input{background:var(--s2);border:1px solid var(--b2);border-radius:6px;padding:6px 12px;color:var(--tx);font-size:12px;width:300px}
+</style>
+</head>
+<body>
+<div class="shell">
+<div class="hdr">
+  <div class="hdr-pill"><span class="pulse"></span> Gemini 2.0 Flash · 真實API已修復</div>
+  <h1>心智圖 → IPO → Python → Colab <span class="badge-gemini">支援真實Gemini API</span></h1>
+  <p style="font-size:13px;color:var(--tx2)">輸入API Key → 一鍵生成IPO架構與完整Python代碼（基礎/類別/Colab互動版）</p>
+</div>
+
+<!-- API Key 設定區 -->
+<div class="card" style="border-color:rgba(79,142,247,.4)">
+  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <input type="password" id="geminiApiKey" class="key-input" placeholder="貼上 Gemini API Key (AIza...)" autocomplete="off">
+      <button class="qbtn" id="toggleApiModeBtn" onclick="toggleApiMode()">🔁 目前: 模擬模式</button>
+      <span style="font-size:11px;color:#a0aec0">💡 填寫有效Key自動啟用真實Gemini，留空則使用模擬引擎</span>
+    </div>
+    <div style="font-size:12px"><a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--acc)">免費取得API Key →</a> (每日1500次)</div>
+  </div>
+  <div id="apiStatusMsg" style="font-size:12px;margin-top:8px;color:var(--grn)"></div>
+</div>
+
+<!-- 步驟導航 -->
+<div class="pipe">
+  <div class="pipe-node active" data-step="1" onclick="goStep(1)"><div class="pipe-num">1</div><div class="pipe-txt">🗺️ 心智圖</div></div><span class="pipe-arrow">›</span>
+  <div class="pipe-node" data-step="2" onclick="goStep(2)"><div class="pipe-num">2</div><div class="pipe-txt">⚙️ IPO架構</div></div><span class="pipe-arrow">›</span>
+  <div class="pipe-node" data-step="3" onclick="goStep(3)"><div class="pipe-num">3</div><div class="pipe-txt">🐍 Python代碼</div></div><span class="pipe-arrow">›</span>
+  <div class="pipe-node" data-step="4" onclick="goStep(4)"><div class="pipe-num">4</div><div class="pipe-txt">☁️ Colab執行</div></div>
+</div>
+
+<!-- 步驟1：心智圖輸入 -->
+<div class="panel active" id="panel-1">
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px">心智圖四個分支</div>
+    <div class="dbar">
+      <button class="dbtn active" id="d-none" onclick="setDomain('')">自訂領域</button>
+      <button class="dbtn" id="d-env" onclick="setDomain('環境工程（河川水質監測）')">🌿 環工</button>
+      <button class="dbtn" id="d-plant" onclick="setDomain('植物醫學（病蟲害診斷）')">🌱 植醫</button>
+      <button class="dbtn" id="d-aqua" onclick="setDomain('水產養殖（智慧魚塭管理）')">🐟 養殖</button>
+      <button class="dbtn" id="d-city" onclick="setDomain('智慧城市（交通與空氣品質整合監測）')">🏙️ 智慧城市</button>
+    </div>
+    <div class="qrow">
+      <span>快速範例：</span>
+      <button class="qbtn" onclick="loadExample('env')">環工</button>
+      <button class="qbtn" onclick="loadExample('plant')">植醫</button>
+      <button class="qbtn" onclick="loadExample('aqua')">養殖</button>
+      <button class="qbtn" onclick="loadExample('city')">🏙️ 智慧城市</button>
+      <button class="qbtn" onclick="clearMindmap()">清除</button>
+    </div>
+    <div class="bgrid">
+      <div class="bc"><div class="bc-title">❓ 問題定義 <span class="tag tag-i">→ INPUT</span></div><textarea id="q1" placeholder="例如：人工監測效率低，24小時連續監測需求"></textarea></div>
+      <div class="bc"><div class="bc-title">⚙️ 技術導入 <span class="tag tag-p">→ PROCESS</span></div><textarea id="q2" placeholder="IoT感測器、AI異常偵測模型"></textarea></div>
+      <div class="bc"><div class="bc-title">🎯 應用情境 <span class="tag tag-po">P / O</span></div><textarea id="q3" placeholder="稽查人員接收推播(OUTPUT) / 現場確認(PROCESS)"></textarea></div>
+      <div class="bc"><div class="bc-title">📊 效益分析 <span class="tag tag-o">→ OUTPUT</span></div><textarea id="q4" placeholder="預警速度提升80% / 成本降低60%"></textarea></div>
+    </div>
+  </div>
+  <div class="errmsg" id="err1"></div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap">
+    <button class="btn btn-gemini" id="geminiGenBtn" onclick="runIPOGeneration()">🤖 使用當前模式生成 IPO</button>
+    <div class="ld" id="ld1"><div class="sp"></div>AI 生成中...</div>
+  </div>
+  <div class="infobox" style="margin-top:12px;font-size:12px">✅ 真實Gemini模式：需填入有效Key，將呼叫 gemini-2.0-flash 生成精準IPO與Python代碼。<br>⚙️ 模擬模式：無需Key，內建規則引擎快速產出。</div>
+</div>
+
+<!-- 步驟2：IPO 展示 -->
+<div class="panel" id="panel-2">
+  <div class="card">
+    <div class="ipo3">
+      <div class="icol inp"><div class="icol-lbl">📥 INPUT</div><div id="ci"></div></div>
+      <div class="icol prc"><div class="icol-lbl">⚙️ PROCESS</div><div id="cp"></div></div>
+      <div class="icol out"><div class="icol-lbl">📊 OUTPUT</div><div id="co"></div></div>
+    </div>
+    <div class="infobox"><div class="infobox-lbl">AI 轉換說明</div><div id="ipoanalysis"></div></div>
+  </div>
+  <div style="display:flex;gap:10px">
+    <button class="btn" onclick="goStep(1)">← 返回修改</button>
+    <button class="btn btn-go" onclick="generatePythonCodes()">🚀 生成 Python 完整版 →</button>
+    <div class="ld" id="ld2"><div class="sp"></div></div>
+  </div>
+</div>
+
+<!-- 步驟3：Python 代碼與除錯助手 -->
+<div class="panel" id="panel-3">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px">
+      <span style="font-weight:600;">🐍 Python 完整版（Class + 函式 + matplotlib + ipywidgets）</span>
+    </div>
+    <div class="code-card">
+      <div class="code-hdr"><span class="code-fname" id="py-fname">code.py</span><button class="qbtn" onclick="copyCurrentCode()">📋 複製此版代碼</button></div>
+      <div class="code-body"><pre id="py-code"></pre></div>
+    </div>
+    <div class="infobox"><div class="infobox-lbl">架構說明</div><div id="py-explain"></div></div>
+
+    <!-- Gemini 除錯助手 -->
+    <div class="debug-panel">
+      <div class="debug-title">🤖 Gemini 除錯 & 優化助手</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+        <button class="qbtn" onclick="geminiDebugAction('檢查錯誤')">🐞 檢查錯誤</button>
+        <button class="qbtn" onclick="geminiDebugAction('最佳化建議')">⚡ 效能優化</button>
+        <button class="qbtn" onclick="geminiDebugAction('重構改善')">🏗️ 重構建議</button>
+        <button class="qbtn" onclick="geminiDebugAction('Colab適配')">☁️ Colab診斷</button>
+      </div>
+      <textarea id="customDebugQuestion" rows="2" placeholder="自訂問題，例如：如何改進錯誤處理？" style="width:100%;background:var(--s2);border:1px solid var(--b2);border-radius:8px;padding:8px;color:var(--tx);font-size:12px"></textarea>
+      <button class="qbtn" style="margin-top:6px" onclick="geminiDebugAction('自訂')">💬 送出自訂詢問</button>
+      <div class="ld" id="debugLoading" style="margin:8px 0"><div class="sp"></div>Gemini 分析中...</div>
+      <div class="debug-output" id="debugOutput">✨ 點擊上方按鈕，將對目前程式碼進行分析（模式取決於API Key設定）。</div>
+    </div>
+  </div>
+  <button class="btn btn-colab" onclick="goStep(4)">☁️ 前往 Colab 執行 →</button>
+</div>
+
+<!-- 步驟4：Colab 部署 -->
+<div class="panel" id="panel-4">
+  <div class="card" style="text-align:center">
+    <div style="font-size:2rem">☁️</div>
+    <div style="font-weight:700;margin:8px 0">複製程式碼，貼上 Colab 立即執行</div>
+    <div style="display:flex;gap:12px;justify-content:center;margin:12px 0">
+      <button class="btn btn-colab" onclick="window.open('https://colab.research.google.com/notebook#create=true','_blank')">📓 開啟 Colab</button>
+      <button class="btn btn-go" onclick="copyColabCode()">📋 複製 Colab 專用程式碼</button>
+    </div>
+    <div class="mini-code" id="s4-preview" style="text-align:left"></div>
+  </div>
+</div>
+</div>
+
+<script>
+// ======================= 全域狀態 =======================
+let domain = '';
+let ipoData = null;               // {input, process, output, analysis}
+let pyCache = null;               // 單一完整版程式碼快取
+let currentStep = 1;
+let useRealGemini = false;
+let geminiApiKey = '';
+
+// DOM 元素
+const keyInput = document.getElementById('geminiApiKey');
+const apiStatusSpan = document.getElementById('apiStatusMsg');
+const toggleBtn = document.getElementById('toggleApiModeBtn');
+
+// 初始化：讀取 localStorage
+(function init() {
+  const savedKey = localStorage.getItem('gemini_key');
+  if (savedKey && savedKey.startsWith('AIza')) {
+    geminiApiKey = savedKey;
+    keyInput.value = savedKey;
+    useRealGemini = true;
+    apiStatusSpan.innerHTML = '✅ 真實 Gemini API 模式已啟用 (gemini-2.0-flash)';
+    toggleBtn.innerHTML = '🔁 目前: 真實Gemini模式';
+  } else {
+    useRealGemini = false;
+    apiStatusSpan.innerHTML = '⚙️ 模擬模式 (輸入有效API Key並重新整理? 或按下方按鈕切換)';
+    toggleBtn.innerHTML = '🔁 目前: 模擬模式';
+  }
+})();
+
+function toggleApiMode() {
+  const newKey = keyInput.value.trim();
+  if (newKey && newKey.startsWith('AIza')) {
+    geminiApiKey = newKey;
+    useRealGemini = true;
+    localStorage.setItem('gemini_key', newKey);
+    apiStatusSpan.innerHTML = '✅ 真實 Gemini API 模式已啟用，可開始生成';
+    toggleBtn.innerHTML = '🔁 目前: 真實Gemini模式';
+  } else {
+    geminiApiKey = '';
+    useRealGemini = false;
+    localStorage.removeItem('gemini_key');
+    apiStatusSpan.innerHTML = '⚙️ 已切換至模擬模式 (免金鑰)';
+    toggleBtn.innerHTML = '🔁 目前: 模擬模式';
+  }
+}
+
+// ---------- 呼叫真實 Gemini API (支援 JSON 與純文字) ----------
+async function callGeminiJSON(prompt) {
+  if (!geminiApiKey) throw new Error('未設定 Gemini API Key');
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: { temperature: 0.2, maxOutputTokens: 2048, responseMimeType: 'application/json' }
+    })
+  });
+  if (!response.ok) {
+    const errData = await response.json().catch(() => ({}));
+    throw new Error(`API 錯誤 ${response.status}: ${errData.error?.message || '請檢查金鑰'}`);
+  }
+  const data = await response.json();
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!text) throw new Error('API 回傳空白');
+  return JSON.parse(text);
+}
+
+async function callGeminiText(prompt) {
+  if (!geminiApiKey) throw new Error('未設定 Gemini API Key');
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: { temperature: 0.3, maxOutputTokens: 2048 }
+    })
+  });
+  if (!response.ok) throw new Error(`API 錯誤 ${response.status}`);
+  const data = await response.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+}
+
+// ---------- 模擬引擎 (免API) ----------
+function simulateIPO(q1, q2, q3, q4, domainHint) {
+  const split = (txt, def) => {
+    if (!txt.trim()) return def;
+    let items = txt.split(/[\n,，、]+/).filter(s => s.trim().length > 1).slice(0, 4);
+    return items.length ? items : def;
+  };
+  let input = split(q1, ["即時監測數據", "環境參數", "異常記錄"]);
+  let process = split(q2, ["數據過濾", "AI推論", "預警判定"]);
+  let output = split(q4, ["視覺化報告", "警報通知", "趨勢分析"]);
+  if (q3.trim()) {
+    let ctx = q3.split(/[\n,，、]+/);
+    ctx.forEach(t => {
+      if (t.includes('輸出') || t.includes('OUTPUT') || t.includes('報告')) output.push(t);
+      else process.push(t);
+    });
+  }
+  input = [...new Set(input.slice(0,5))];
+  process = [...new Set(process.slice(0,5))];
+  output = [...new Set(output.slice(0,5))];
+  return {
+    input, process, output,
+    analysis: `[模擬] 從問題定義提取輸入項，技術流程轉為處理步驟，效益形成輸出清單。`
+  };
+}
+
+async function simulatePython(ipo, domainHint) {
+  const { input, process, output } = ipo;
+  const i_json = JSON.stringify(input);
+  const p_json = JSON.stringify(process);
+  const o_json = JSON.stringify(output);
+  const domainName = domainHint || 'IPO 系統';
+  return `# ${domainName}｜完整版 (Class + 函式分層 + matplotlib + ipywidgets)
+!pip install matplotlib ipywidgets numpy -q
+import numpy as np
+import matplotlib.pyplot as plt
+import ipywidgets as widgets
+
+class IPOSystem:
+    """${domainName} 整合系統 - 對應心智圖四分支"""
+    def __init__(self):
+        self.input_items   = ${i_json}   # INPUT  (來自問題定義)
+        self.process_items = ${p_json}   # PROCESS(來自技術導入)
+        self.output_items  = ${o_json}   # OUTPUT (來自效益分析)
+
+    # ----- INPUT 階段：模擬 24 小時感測資料 -----
+    def get_input(self, hours=24):
+        np.random.seed(42)
+        t = np.arange(hours)
+        signal = 50 + 30*np.exp(-((t-8)**2)/8) + 35*np.exp(-((t-18)**2)/8)
+        signal += np.random.normal(0, 4, hours)
+        return {"time": t, "value": signal}
+
+    # ----- PROCESS 階段：閾值判定 -----
+    def process(self, data, threshold=60):
+        alerts = [v > threshold for v in data["value"]]
+        return alerts
+
+    # ----- OUTPUT 階段：視覺化 + 文字報告 -----
+    def output(self, data, alerts, threshold):
+        fig, ax = plt.subplots(2, 1, figsize=(10, 6))
+        ax[0].plot(data["time"], data["value"], color="#4f8ef7", linewidth=2, label="感測值")
+        ax[0].axhline(threshold, color="#ef4444", linestyle="--", label=f"閾值 {threshold}")
+        ax[0].fill_between(data["time"], data["value"], threshold,
+                           where=[v > threshold for v in data["value"]],
+                           color="#ef4444", alpha=0.2, label="超標區")
+        ax[0].set_title("INPUT → 感測時序資料"); ax[0].set_xlabel("時段 (小時)")
+        ax[0].legend(); ax[0].grid(alpha=0.3)
+
+        colors = ["#ef4444" if a else "#10b981" for a in alerts]
+        ax[1].bar(data["time"], [1 if a else 0 for a in alerts], color=colors)
+        ax[1].set_title(f"PROCESS → OUTPUT 警報判定 (共 {sum(alerts)} 個時段)")
+        ax[1].set_xlabel("時段 (小時)"); ax[1].set_yticks([0, 1])
+        ax[1].set_yticklabels(["正常", "警報"]); ax[1].grid(alpha=0.3)
+        plt.tight_layout(); plt.show()
+
+        print("=" * 50)
+        print("📥 INPUT  :", self.input_items)
+        print("⚙️ PROCESS:", self.process_items)
+        print("📊 OUTPUT :", self.output_items)
+        print("=" * 50)
+        print(f"🚨 警報時段共 {sum(alerts)} 小時，閾值設為 {threshold}")
+
+    # ----- 主流程：串接 IPO 三階段 -----
+    def run(self, threshold=60):
+        data = self.get_input()
+        alerts = self.process(data, threshold)
+        self.output(data, alerts, threshold)
+
+
+# ===== Colab 互動入口：拖動滑桿即時重算 =====
+system = IPOSystem()
+widgets.interact(
+    system.run,
+    threshold=widgets.IntSlider(min=30, max=100, step=5, value=60,
+                                description="閾值", continuous_update=False)
+);`;
+}
+
+// 真實 Gemini 生成 IPO
+async function realGenerateIPO(q1, q2, q3, q4, domainHint) {
+  const prompt = `你是AI架構師，根據以下心智圖四分支轉換為IPO架構(輸入/處理/輸出)。
+領域背景：${domainHint || '無'}
+問題定義(對應INPUT)：${q1 || '未填'}
+技術導入(對應PROCESS)：${q2 || '未填'}
+應用情境(跨PROCESS/OUTPUT)：${q3 || '未填'}
+效益分析(對應OUTPUT)：${q4 || '未填'}
+要求：轉換出具體、可操作的IPO項目，每個區塊至少4項。輸出JSON格式：{"input":["項目1","項目2",...],"process":["..."],"output":["..."],"analysis":"60字內轉換說明"}`;
+  return await callGeminiJSON(prompt);
+}
+
+async function realGeneratePython(ipo, domainHint) {
+  const { input, process, output } = ipo;
+  const instruction = '產生「單一最完整版」Python 程式碼：包含 (1) class 封裝 IPO 三階段、(2) get_input/process/output/run 四個函式分層、(3) 用 numpy 產生 24 小時模擬時序資料、(4) matplotlib 雙子圖視覺化（時序 + 警報長條圖）、(5) ipywidgets.interact 滑桿即時重算、(6) 開頭 %pip install matplotlib ipywidgets numpy -q、(7) 繁體中文註解標示 INPUT/PROCESS/OUTPUT。';
+  const prompt = `你是Python專家，根據以下IPO架構產生${instruction}
+領域：${domainHint}
+INPUT：${input.join('、')}
+PROCESS：${process.join('、')}
+OUTPUT：${output.join('、')}
+只回傳Python程式碼本身，不要任何額外說明，不要 markdown 程式碼框。`;
+  return await callGeminiText(prompt);
+}
+
+// 主流程：生成 IPO
+async function runIPOGeneration() {
+  const q1 = document.getElementById('q1').value.trim();
+  const q2 = document.getElementById('q2').value.trim();
+  const q3 = document.getElementById('q3').value.trim();
+  const q4 = document.getElementById('q4').value.trim();
+  if (!q1 && !q2 && !q3 && !q4) {
+    document.getElementById('err1').innerHTML = '請至少填寫一個心智圖分支';
+    document.getElementById('err1').classList.add('on');
+    setTimeout(() => document.getElementById('err1').classList.remove('on'), 2000);
+    return;
+  }
+  const btn = document.getElementById('geminiGenBtn');
+  const loading = document.getElementById('ld1');
+  btn.disabled = true;
+  loading.style.display = 'flex';
+  document.getElementById('err1').classList.remove('on');
+
+  try {
+    let newIPO;
+    if (useRealGemini && geminiApiKey) {
+      newIPO = await realGenerateIPO(q1, q2, q3, q4, domain);
+    } else {
+      newIPO = simulateIPO(q1, q2, q3, q4, domain);
+    }
+    ipoData = newIPO;
+    // 清除舊快取
+    pyCache = null;
+    // 顯示IPO
+    document.getElementById('ci').innerHTML = newIPO.input.map(x => `<div class="iitem"><span class="ibullet"></span>${escapeHtml(x)}</div>`).join('');
+    document.getElementById('cp').innerHTML = newIPO.process.map(x => `<div class="iitem"><span class="ibullet"></span>${escapeHtml(x)}</div>`).join('');
+    document.getElementById('co').innerHTML = newIPO.output.map(x => `<div class="iitem"><span class="ibullet"></span>${escapeHtml(x)}</div>`).join('');
+    document.getElementById('ipoanalysis').innerText = newIPO.analysis || '轉換完成';
+    goStep(2);
+  } catch (err) {
+    document.getElementById('err1').innerHTML = `生成失敗: ${err.message}`;
+    document.getElementById('err1').classList.add('on');
+  } finally {
+    btn.disabled = false;
+    loading.style.display = 'none';
+  }
+}
+
+// 生成單一最完整版 Python 程式碼
+async function generatePythonCodes() {
+  if (!ipoData) {
+    alert('請先從步驟1生成IPO架構');
+    return;
+  }
+  const btn = document.querySelector('#panel-2 .btn-go');
+  const loading = document.getElementById('ld2');
+  if (btn) btn.disabled = true;
+  loading.style.display = 'flex';
+  try {
+    let code;
+    if (useRealGemini && geminiApiKey) {
+      code = await realGeneratePython(ipoData, domain);
+    } else {
+      code = await simulatePython(ipoData, domain);
+    }
+    pyCache = { filename: 'ipo_full.py', code };
+    renderPythonCode();
+    goStep(3);
+  } catch (err) {
+    alert('生成Python失敗: ' + err.message);
+  } finally {
+    if (btn) btn.disabled = false;
+    loading.style.display = 'none';
+  }
+}
+
+function renderPythonCode() {
+  if (!pyCache) return;
+  document.getElementById('py-fname').innerText = pyCache.filename;
+  document.getElementById('py-code').innerText = pyCache.code;
+  document.getElementById('s4-preview').innerText = pyCache.code;
+  document.getElementById('py-explain').innerHTML = `<div>✅ 程式碼由 ${useRealGemini ? '真實Gemini' : '模擬引擎'} 生成 - 單一完整版（Class + 函式分層 + matplotlib 視覺化 + ipywidgets 互動）</div>`;
+}
+
+// (已移除 switchPyMode - 只剩單一完整版)
+
+// Gemini 除錯助手
+async function geminiDebugAction(actionType) {
+  const code = document.getElementById('py-code').innerText;
+  if (!code) { alert('無程式碼可分析'); return; }
+  let question = document.getElementById('customDebugQuestion').value.trim();
+  let prompt = '';
+  if (actionType === '自訂') {
+    if (!question) { alert('請輸入自訂問題'); return; }
+    prompt = `你是一位Python與IPO專家，請回答以下問題，程式碼如下：\n${code}\n問題：${question}`;
+  } else {
+    prompt = `請對以下Python程式碼進行「${actionType}」分析，並給出具體建議（繁體中文）。\n程式碼：\n${code}\n領域背景：${domain}\nIPO資訊：輸入${JSON.stringify(ipoData?.input||[])}，處理${JSON.stringify(ipoData?.process||[])}，輸出${JSON.stringify(ipoData?.output||[])}`;
+  }
+  const outputDiv = document.getElementById('debugOutput');
+  const loadingDiv = document.getElementById('debugLoading');
+  outputDiv.innerHTML = '';
+  loadingDiv.style.display = 'flex';
+  try {
+    let result = '';
+    if (useRealGemini && geminiApiKey) {
+      result = await callGeminiText(prompt);
+    } else {
+      await new Promise(r => setTimeout(r, 600));
+      if (actionType === '檢查錯誤') result = '🔍 模擬分析：語法正確，建議加入例外處理與輸入驗證。';
+      else if (actionType === '最佳化建議') result = '⚡ 可將重複邏輯提取為函式，使用列表推導加速。';
+      else if (actionType === '重構改善') result = '🏗️ 建議採用類別封裝IPO各階段，增加單元測試。';
+      else if (actionType === 'Colab適配') result = '☁️ 確保安裝指令使用 !pip，ipywidgets 需啟用互動。';
+      else result = `🤖 模擬回覆：${question}\n建議參考IPO架構調整輸出格式。`;
+      result += '\n(模擬模式，輸入有效Gemini Key取得真實分析)';
+    }
+    outputDiv.innerHTML = result.replace(/\n/g, '<br>');
+  } catch (err) {
+    outputDiv.innerHTML = `❌ 錯誤: ${err.message}`;
+  } finally {
+    loadingDiv.style.display = 'none';
+  }
+}
+
+// 輔助函數
+function copyCurrentCode() {
+  const code = document.getElementById('py-code').innerText;
+  navigator.clipboard.writeText(code);
+  alert('已複製目前版本的程式碼');
+}
+function copyColabCode() {
+  if (pyCache && pyCache.code) navigator.clipboard.writeText(pyCache.code);
+  else alert('尚未生成 Colab 程式碼');
+}
+function goStep(step) {
+  currentStep = step;
+  document.querySelectorAll('.panel').forEach((p, i) => p.classList.toggle('active', i === step-1));
+  document.querySelectorAll('.pipe-node').forEach((nd, idx) => {
+    const s = parseInt(nd.dataset.step);
+    nd.classList.toggle('active', s === step);
+    nd.classList.toggle('done', s < step);
+  });
+  if (step === 4 && pyCache && pyCache.code) document.getElementById('s4-preview').innerText = pyCache.code;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function setDomain(d) {
+  domain = d;
+  document.querySelectorAll('.dbtn').forEach(btn => btn.classList.remove('active'));
+  if (d === '環境工程（河川水質監測）') document.getElementById('d-env').classList.add('active');
+  else if (d === '植物醫學（病蟲害診斷）') document.getElementById('d-plant').classList.add('active');
+  else if (d === '水產養殖（智慧魚塭管理）') document.getElementById('d-aqua').classList.add('active');
+  else if (d === '智慧城市（交通與空氣品質整合監測）') document.getElementById('d-city').classList.add('active');
+  else document.getElementById('d-none').classList.add('active');
+}
+function loadExample(type) {
+  const examples = {
+    env: { q1: "人工監測效率低，週期長3-7天\n24小時連續監測需求\n污染源難以追溯", q2: "IoT水質感測器(pH,DO,COD)\n機器學習異常偵測", q3: "稽查人員接收手機推播(OUTPUT)\n現場快速確認污染點(PROCESS)", q4: "預警速度提升80%\n採樣成本降低60%", domain: "環境工程（河川水質監測）" },
+    plant: { q1: "農民難以識別病蟲害\n診斷耗時3-5天", q2: "手機拍照上傳CNN模型\n用藥資料庫查詢", q3: "APP拍照辨識(PROCESS)\n推薦用藥(OUTPUT)", q4: "準確率91%\n農藥減量35%", domain: "植物醫學（病蟲害診斷）" },
+    aqua: { q1: "夏季溶氧不足\n人力值班成本高", q2: "LSTM預測溶氧\n自動增氧機", q3: "設定閾值(PROCESS)\n危急推播(OUTPUT)", q4: "死亡率降至1.8%", domain: "水產養殖（智慧魚塭管理）" },
+    city: { q1: "通勤尖峰時段塞車嚴重\n空氣污染熱點難以即時辨識\n民眾缺乏避開壅塞與污染的資訊\n環保局與交通局稽查人力不足", q2: "路口 IoT 車流感測器\n微型空品站(PM2.5/NO2/CO)\nLSTM 時序預測模型\nGIS 地理資訊疊圖分析", q3: "駕駛 APP 收到避堵與避污路線推播(OUTPUT)\n市府儀表板顯示區域熱點(OUTPUT)\n演算法整合多源感測資料(PROCESS)\n偵測污染-交通相關性(PROCESS)", q4: "尖峰通勤時間減少25%\n污染稽查效率提升70%\n市民健康風險顯著降低\n城市碳排放下降12%", domain: "智慧城市（交通與空氣品質整合監測）" }
+  };
+  const ex = examples[type];
+  if (ex) {
+    document.getElementById('q1').value = ex.q1;
+    document.getElementById('q2').value = ex.q2;
+    document.getElementById('q3').value = ex.q3;
+    document.getElementById('q4').value = ex.q4;
+    setDomain(ex.domain);
+  }
+}
+function clearMindmap() {
+  ['q1','q2','q3','q4'].forEach(id => document.getElementById(id).value = '');
+  setDomain('');
+  ipoData = null;
+  pyCache = null;
+}
+function escapeHtml(str) {
+  return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+}
+</script>
+</body>
+</html>
